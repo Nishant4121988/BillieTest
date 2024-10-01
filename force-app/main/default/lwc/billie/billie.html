@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Top 10 Most Read Articles on BBC News">
+        <ul>
+            <template for:each={articles} for:item="article">
+                <li key={article.key}>
+                    <a href={article.url} target="_blank">{article.key}. {article.title}</a>
+                </li>
+            </template>
+        </ul>
+    </lightning-card>
+</template>
