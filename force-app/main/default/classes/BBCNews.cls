@@ -15,7 +15,7 @@ public with sharing class BBCNews {
                 // Extract the specific section of the responseBody that contains the articles
                 String sectionTag = responseBody.substringBetween(
                     '<section data-testid="illinois-section-outer-10" data-analytics-group="true" data-analytics_group_name="Most read"',
-                    '<div data-component="ad-slot" data-testid="ad-unit" class="sc-c361b622-0 fHxdon"'
+                    '<div data-component="ad-slot" data-testid="ad-unit"'
                 );
                 
                 // Extract the grid of articles
@@ -37,12 +37,10 @@ public with sharing class BBCNews {
                     Integer titleStartIndex = articleGrid.indexOf('<h2', endIndex);
                     Integer titleEndIndex = articleGrid.indexOf('</h2>', titleStartIndex);
                     String title = articleGrid.substringBetween('<h2', '</h2>').replaceAll('<[^>]+>', '').trim();
-                    title = title.substringAfter('data-testid="card-headline" class="sc-4fedabc7-3 gJvjEE">');
-                    title = title.replaceAll('&#x27;', '');
-                    
+                    title = title.substringAfter('>');
+                    title = title.replaceAll('&#x27;', '');                    
                     // Add to the articles list
                     articles.add(new Article(title, url));
-
                     // Trim down the string to look for the next article
                     articleGrid = articleGrid.substring(titleEndIndex);
                 }
